@@ -6,15 +6,14 @@ window.onload=()=> {
   ctx.fillStyle='#000';
   ctx.fillRect(0,0,width,height);
   var easing=0.5;
-  var x=1;
-  var diff =
+  var x=50;
   var p = new Ball();
   var u = new User();
   function Ball(){
     this.x=width/2;
     this.y=height/2;
-    this.vx=3;
-    this.vy=3;
+    this.vx=10;
+    this.vy=10;
     this.side=20;
   }
 
@@ -48,16 +47,21 @@ window.onload=()=> {
   User.prototype.update = function (keycodenumber) {
     let UP=38;
     let DOWN=40;
+    var diff =10-x;
     switch(keycodenumber){
       case UP:
+      var diff =10-x;
       if(this.y>=150){
-        this.y-=10;
+        x+=diff*easing
+        this.y-=x;
       }
       break;
 
       case DOWN:
+      var diff =10-x;
       if (this.y<=height-150) {
-        this.y+=10;
+        x+=diff*easing
+        this.y+=x;
       }
       break;
     }
@@ -67,8 +71,6 @@ window.onload=()=> {
     ctx.fillStyle='#fff';
     ctx.fillRect(this.x,this.y-150,50,300);
   };
-
-
 
   function animate(){
     ani  =  window.requestAnimationFrame(animate);
