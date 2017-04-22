@@ -1,4 +1,3 @@
-window.onload=()=> {
   var canvas = document.getElementById('sketch');
   var ctx = canvas.getContext('2d');
   var width = canvas.width=window.innerWidth;
@@ -10,7 +9,7 @@ window.onload=()=> {
   var p = new Ball();
   var u = new User();
   var c = new Com();
-
+  score1=0;
   function Ball(){
     this.x=width/2;
     this.y=height/2;
@@ -22,17 +21,25 @@ window.onload=()=> {
   Ball.prototype.update = function () {
     this.x+=this.vx;
     this.y+=this.vy;
-    if(this.x>=width-10){
+     if(u.y-150<=this.y-10 && this.y+10<=u.y+150 && this.x<=10+50) {
       this.vx*=-1;
+      document.getElementsByClassName('score1').innerHTML=score1++;
+      // console.log(u.x);
     }
-    else if (this.x<=10) {
-      this.vx*=-1;
-    }
-    else if (this.y>=height-10) {
-      this.vy*=-1;
-    }
-    else if (this.y<=10) {
-      this.vy*=-1;
+    else {
+      if(this.x>=width-10){
+        this.vx*=-1;
+      }
+      else if (this.x<=10) {
+        this.vx*=0;
+        this.vy*=0;
+      }
+      else if (this.y>=height-10) {
+        this.vy*=-1;
+      }
+      else if (this.y<=10) {
+        this.vy*=-1;
+      }
     }
   };
 
@@ -70,7 +77,7 @@ window.onload=()=> {
   };
 
   User.prototype.draw = function () {
-    ctx.fillStyle='	#FE6161';
+    ctx.fillStyle='#FE6161';
     ctx.fillRect(this.x,this.y-150,50,300);
   };
 
@@ -84,7 +91,7 @@ window.onload=()=> {
   };
 
   Com.prototype.draw = function () {
-    ctx.fillStyle='	#6161fe';
+    ctx.fillStyle='#6161fe';
     ctx.fillRect(this.x,this.y-150,50,300);
   };
 
@@ -98,13 +105,11 @@ window.onload=()=> {
     p.draw();
     //still need to figure out to launch event on the canvas block
     document.onkeydown = function(e) {
-      console.log(e.keyCode);
+      // console.log(e.keyCode);
       u.update(e.keyCode);
+      //console.log(u.y);
     }
     c.draw();
     u.draw();
   }
-
   ani  =  window.requestAnimationFrame(animate);
-
-}
