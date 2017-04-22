@@ -9,7 +9,10 @@
   var p = new Ball();
   var u = new User();
   var c = new Com();
-  score1=0;
+  var score1=0;
+  var score2=0;
+
+
   function Ball(){
     this.x=width/2;
     this.y=height/2;
@@ -23,21 +26,30 @@
     this.y+=this.vy;
      if(u.y-150<=this.y-10 && this.y+10<=u.y+150 && this.x<=10+50) {
       this.vx*=-1;
-      document.getElementsByClassName('score1').innerHTML=score1++;
       // console.log(u.x);
+    }
+    else if (c.y-150<=this.y-10 && this.y+10<=c.y+150 && this.x>=width-50) {
+      this.vx*=-1;
     }
     else {
       if(this.x>=width-10){
-        this.vx*=-1;
+        this.vx*=0;
+        this.vy*=0;
+        document.getElementById('score1').innerHTML=++score1;
+        this.x=width/2;
+        this.y=height/2;
       }
       else if (this.x<=10) {
         this.vx*=0;
         this.vy*=0;
+        document.getElementById('score2').innerHTML=++score2;
+        this.x=width/2;
+        this.y=height/2;
       }
-      else if (this.y>=height-10) {
+      else if ((this.y>=height-10) || (p.x==width/2 && p.y==height/2)) {
         this.vy*=-1;
       }
-      else if (this.y<=10) {
+      else if ((this.y<=10) || (p.x==width/2 && p.y==height/2)) {
         this.vy*=-1;
       }
     }
@@ -62,7 +74,7 @@
       var diff =10-x;
       if(this.y>=150){
         x+=diff*easing
-        this.y-=x;
+        this.y-=10;
       }
       break;
 
@@ -70,7 +82,7 @@
       var diff =10-x;
       if (this.y<=height-150) {
         x+=diff*easing
-        this.y+=x;
+        this.y+=10;
       }
       break;
     }
@@ -87,7 +99,26 @@
   }
 
   Com.prototype.update = function () {
-
+    if(Math.random() < 0.2){
+      this.up=false;
+      this.down=false;
+      if (p.y + 10 < this.y + 150 ) {
+        this.up = true;
+      }
+      else if (p.y > this.y + 150 ) {
+        this.down = true;
+      }
+    }
+    if (this.up) {
+      if(this.y>=150){
+        this.y -= 10;
+      }
+    }
+    else if (this.down) {
+      if(this.y<=height-150){
+        this.y += 10;
+      }
+    }
   };
 
   Com.prototype.draw = function () {
@@ -109,6 +140,7 @@
       u.update(e.keyCode);
       //console.log(u.y);
     }
+    c.update();
     c.draw();
     u.draw();
   }
