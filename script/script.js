@@ -9,6 +9,8 @@ window.onload=()=> {
   var x=50;
   var p = new Ball();
   var u = new User();
+  var c = new Com();
+
   function Ball(){
     this.x=width/2;
     this.y=height/2;
@@ -68,7 +70,21 @@ window.onload=()=> {
   };
 
   User.prototype.draw = function () {
-    ctx.fillStyle='#fff';
+    ctx.fillStyle='	#FE6161';
+    ctx.fillRect(this.x,this.y-150,50,300);
+  };
+
+  function Com(){
+    this.x=width-50;
+    this.y=height/2;
+  }
+
+  Com.prototype.update = function () {
+
+  };
+
+  Com.prototype.draw = function () {
+    ctx.fillStyle='	#6161fe';
     ctx.fillRect(this.x,this.y-150,50,300);
   };
 
@@ -76,6 +92,8 @@ window.onload=()=> {
     ani  =  window.requestAnimationFrame(animate);
     ctx.fillStyle='#000';
     ctx.fillRect(0,0,width,height);
+    ctx.fillStyle='#fff';
+    ctx.fillRect((width/2)-1,0,2,height)
     p.update();
     p.draw();
     //still need to figure out to launch event on the canvas block
@@ -83,6 +101,7 @@ window.onload=()=> {
       console.log(e.keyCode);
       u.update(e.keyCode);
     }
+    c.draw();
     u.draw();
   }
 
