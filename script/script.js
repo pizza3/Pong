@@ -2,8 +2,6 @@
   var ctx = canvas.getContext('2d');
   var width = canvas.width=window.innerWidth;
   var height  = canvas.height=window.innerHeight;
-  ctx.fillStyle='#000';
-  ctx.fillRect(0,0,width,height);
   var easing=0.5;
   var x=50;
   var p = new Ball();
@@ -11,6 +9,7 @@
   var c = new Com();
   var score1=0;
   var score2=0;
+  var halt=false;
 
 
   function Ball(){
@@ -38,6 +37,9 @@
         document.getElementById('score1').innerHTML=++score1;
         this.x=width/2;
         this.y=height/2;
+        halt=false;
+        this.vx=10;
+        this.vy=10;
       }
       else if (this.x<=10) {
         this.vx*=0;
@@ -45,6 +47,9 @@
         document.getElementById('score2').innerHTML=++score2;
         this.x=width/2;
         this.y=height/2;
+        halt=false;
+        this.vx=10;
+        this.vy=10;
       }
       else if ((this.y>=height-10) || (p.x==width/2 && p.y==height/2)) {
         this.vy*=-1;
@@ -111,12 +116,12 @@
     }
     if (this.up) {
       if(this.y>=150){
-        this.y -= 10;
+        this.y -= p.y/30;
       }
     }
     else if (this.down) {
       if(this.y<=height-150){
-        this.y += 10;
+        this.y += p.y/30;
       }
     }
   };
@@ -128,14 +133,19 @@
 
   function animate(){
     ani  =  window.requestAnimationFrame(animate);
-    ctx.fillStyle='#000';
-    ctx.fillRect(0,0,width,height);
-    ctx.fillStyle='#fff';
-    ctx.fillRect((width/2)-1,0,2,height)
-    p.update();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle='#3d3d3d';
+    ctx.fillRect((width/2)-1,0,2,height);
+    if(halt){
+      p.update();
+    }
+    // p.update();
     p.draw();
     //still need to figure out to launch event on the canvas block
     document.onkeydown = function(e) {
+      if(e.keyCode==32){
+        halt=true;
+      }
       // console.log(e.keyCode);
       u.update(e.keyCode);
       //console.log(u.y);
