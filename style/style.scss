@@ -7,25 +7,33 @@
 html{
   overflow-y: hidden;
 }
+body{
+  background-color: #000;
+}
 
 .score1{
   position: fixed;
-  left:40%;
+  left: 10%;
+  bottom: -259px;
   font-family: 'Anton', sans-serif;
   color: #FE6161;
-  font-size: 100px;
-  z-index: 20;
+  font-size: 824px;
+  z-index: 10;
+  opacity: .28;
 }
 
 .score2{
   position: fixed;
-  left: 56.5%;
+  left: 60.5%;
+  bottom: -259px;
   font-family: 'Anton', sans-serif;
   color: #6161fe;
-  font-size: 100px;
-  z-index: 20;
+  font-size: 824px;
+  z-index: 10;
+  opacity: 0.37;
 }
 
 #sketch{
+  z-index: 20;
   position: fixed;
 }
